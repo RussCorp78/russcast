@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="A personal podcast player with adjustable audio levelling.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>RussCast</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">◖</span><div><strong>RussCast</strong><small>Your podcasts, your volume</small></div></div>
+    <button id="settingsButton" class="icon-button" aria-label="Settings" title="Settings">⚙</button>
+  </header>
+
+  <main>
+    <section class="search-panel panel">
+      <form id="searchForm" class="search-row">
+        <input id="searchInput" type="search" placeholder="Search podcasts…" autocomplete="off" aria-label="Search podcasts">
+        <button class="primary" type="submit">Search</button>
+      </form>
+      <p class="hint">Search the Apple Podcasts catalogue. Add a show to keep it in your library.</p>
+      <div id="searchStatus" class="status" aria-live="polite"></div>
+      <div id="searchResults" class="show-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2>My podcasts</h2></div><span id="libraryCount" class="count">0 shows</span></div>
+      <div id="library" class="show-grid empty-state">Search for a podcast above to get started.</div>
+    </section>
+
+    <section id="episodesSection" class="section hidden">
+      <div class="section-heading"><div><p class="eyebrow">SHOW</p><h2 id="selectedShowTitle">Episodes</h2></div><button id="backToLibrary" class="text-button">Close</button></div>
+      <div id="feedStatus" class="status"></div>
+      <div id="episodes" class="episode-list"></div>
+    </section>
+
+    <section class="player panel" id="playerPanel">
+      <div class="player-top">
+        <div><p class="eyebrow">NOW PLAYING</p><h2 id="nowTitle">Choose an episode</h2><p id="nowShow" class="muted">Your selected episode will appear here</p></div>
+        <img id="nowArtwork" src="icon.svg" alt="" class="player-art">
+      </div>
+      <audio id="audio" preload="metadata" playsinline></audio>
+      <div class="timeline">
+        <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Playback position">
+        <div class="time-row"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
+      </div>
+      <div class="controls">
+        <button id="back15" class="round-control" aria-label="Back 15 seconds">↶<small>15</small></button>
+        <button id="playButton" class="play-control" aria-label="Play">▶</button>
+        <button id="forward30" class="round-control" aria-label="Forward 30 seconds">↷<small>30</small></button>
+      </div>
+      <div class="player-options">
+        <label class="compact-control">Speed
+          <select id="speed">
+            <option value="0.8">0.8×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option>
+          </select>
+        </label>
+        <button id="sleepButton" class="secondary">Sleep timer</button>
+      </div>
+      <div class="audio-enhance">
+        <div class="enhance-heading"><div><strong>Volume levelling</strong><small>Reduce loud peaks and make speech more even</small></div><span id="audioModeLabel" class="mode-pill">Balanced</span></div>
+        <div class="mode-options" role="group" aria-label="Audio levelling strength">
+          <button data-mode="off">Off</button><button data-mode="balanced" class="active">Balanced</button><button data-mode="strong">Strong</button>
+        </div>
+        <p class="fine-print">This adjusts dynamic range; it cannot identify adverts specifically. Results depend on the recording and your device.</p>
+      </div>
+      <div class="volume-row"><label for="volume">Player volume</label><input id="volume" type="range" min="0" max="1" step="0.01" value="0.85"><span id="volumeValue">85%</span></div>
+      <div id="playerMessage" class="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog">
+    <div class="dialog-heading"><h2>Settings</h2><button class="icon-button" id="closeSettings" aria-label="Close">✕</button></div>
+    <p>RussCast stores your subscriptions and listening position on this device only. Clearing website data will remove them.</p>
+    <label class="setting-label" for="feedProxy">Optional RSS feed proxy URL</label>
+    <input id="feedProxy" type="url" placeholder="https://your-worker.example.workers.dev/?url=">
+    <p class="fine-print">Some podcast hosts block browsers from reading RSS feeds directly. If that happens, you can deploy the optional Cloudflare Worker included in this ZIP and paste its URL here. Leave blank initially.</p>
+    <button id="saveSettings" class="primary full">Save settings</button>
+    <button id="clearData" class="danger full">Clear subscriptions and progress</button>
+  </dialog>
+
+  <footer><span>RussCast · Personal podcast player</span><span>Audio enhancement is optional</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>

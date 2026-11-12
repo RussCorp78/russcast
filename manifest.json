@@ -1,0 +1,17 @@
+{
+  "name": "RussCast Podcast Player",
+  "short_name": "RussCast",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#111827",
+  "description": "A personal podcast player with adjustable audio levelling.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
